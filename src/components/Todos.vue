@@ -1,13 +1,13 @@
 <template>
   <div class="row nav">
     <b-nav>
-      <button @click="filterTodos('all')">
+      <button @click="type = 'all'">
         <b-nav-item>All</b-nav-item>
       </button>
-      <button @click="filterTodos('uncompleted')">
+      <button @click="type = 'uncompleted'">
         <b-nav-item>UnCompleted</b-nav-item>
       </button>
-      <button @click="filterTodos('completed')">
+      <button @click="type='completed'">
         <b-nav-item>Completed</b-nav-item>
       </button>
     </b-nav>
@@ -17,26 +17,25 @@
       <input type="checkbox" :checked="todo.completed" @click="updateCompleted(todo.id)" />
       <label>{{todo.date}}</label>
       <h5>{{todo.title}}</h5>
-      <button @click="updateTodos(todo.id)">Edit</button>
     </div>
   </div>
+  <input class="markall" type="checkbox" @click="updateAllComplete($event.target.checked)" />
+  <label for>Mark all as completed</label>
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      listTodos: this.$store.state.todos,
+      listTodos: [],
+      type: "all",
     };
   },
   computed: {
-    // todos() {
-    //   return this.$store.state.todos;
-    // },
     ...mapState(["todos"]),
   },
   methods: {
-    ...mapMutations(["updateCompleted"]),
+    ...mapMutations(["updateCompleted", "updateAllComplete"]),
     filterTodos(type) {
       switch (type) {
         case "uncompleted":
@@ -50,6 +49,21 @@ export default {
           this.listTodos = this.$store.state.todos;
       }
     },
+  },
+  watch: {
+    type: {
+      handler(val) {
+        this.filterTodos(val);
+      },
+    },
+    todos: {
+      handler(val) {
+        this.listTodos = val;
+      },
+    },
+  },
+  mounted() {
+    this.listTodos = this.todos;
   },
 };
 </script>
@@ -78,5 +92,13 @@ export default {
   text-decoration: none;
   color: black;
   background-color: white;
+  border: none;
+  outline: none;
+}
+.markall {
+  margin: 5% 10px 0 80%;
+}
+.active {
+  text-decoration: solid;
 }
 </style>

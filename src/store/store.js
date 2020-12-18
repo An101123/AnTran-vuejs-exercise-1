@@ -12,6 +12,7 @@ const storeData = {
             { id: 3, title: "This is 3", date: "10-10-2020", completed: false },
         ],
     },
+    getters: {},
     mutations: {
         updateCompleted(state, id) {
             state.todos = state.todos.map((item) => {
@@ -26,6 +27,12 @@ const storeData = {
         },
         addNewItem(state, newItem) {
             state.todos.push(newItem);
+        },
+        updateAllComplete(state, value = null) {
+            state.todos = state.todos.map((item) => ({
+                ...item,
+                completed: value,
+            }));
         },
     },
     actions: {

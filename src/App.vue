@@ -31,4 +31,7 @@ export default {
   border: 0;
   font-size: 100%;
 }
+*:focus {
+  outline: none;
+}
 </style>

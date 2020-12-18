@@ -30,7 +30,4 @@ export default {
   border-width: 0;
   box-shadow: none;
 }
-*:focus {
-  outline: none;
-}
 </style>
