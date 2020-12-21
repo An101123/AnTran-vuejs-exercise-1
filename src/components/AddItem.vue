@@ -4,7 +4,7 @@
     type="text"
     placeholder="Add item"
     v-model="addItem"
-    @keyup.enter="addItemTodo(addItem), (addItem='')"
+    @keyup.enter="[addItemTodo(addItem), addItem='']"
   />
 </template>
 <script>
